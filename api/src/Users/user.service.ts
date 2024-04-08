@@ -16,7 +16,7 @@ export class UserService {
     }
 
     async findByUsername(username: string): Promise<User>{
-        return this.userRepository.findOne({ where : { username}});
+        return this.userRepository.findOne({ where : { username }});
     }
 
     async getAllUser(): Promise<User[]>{

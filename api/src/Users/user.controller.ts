@@ -1,4 +1,4 @@
-import { Controller, Get, Post,Body, Param } from '@nestjs/common';
+import { Controller, Get, Post,Body, Param, UnauthorizedException, ParseIntPipe } from '@nestjs/common';
 import { UserService } from './user.service';
 import * as bcrypt from 'bcrypt';
 
@@ -27,35 +27,23 @@ export class UserController{
     }
 
     @Post('login')
-  async login(@Body() { username, password }: { username: string; password: string }) {
-    try {
-      // Obtener el usuario de la base de datos por su nombre de usuario
+    async login(@Body() { username, password }: { username: string; password: string }) {
       const user = await this.userService.findByUsername(username);
 
-      // Verificar si el usuario existe
       if (!user) {
-        throw new Error('Usuario no encontrado');
+        throw new UnauthorizedException('Credenciales incorrectas');
       }
 
-      // Verificar si la contraseña proporcionada coincide con la almacenada en la base de datos
       const passwordMatch = await bcrypt.compare(password, user.password);
-
       if (passwordMatch) {
-        // Contraseña válida, iniciar sesión exitosamente
-        return { message: 'Inicio de sesión exitoso' };
-      } else {
-        // Contraseña incorrecta
-        throw new Error('Contraseña incorrecta');
+        return { success: true, user: { username: user.username },
       }
-    } catch (error) {
-      throw new Error('Error al iniciar sesión');
-    }
-  }
 
+      }
+    }
 
     @Get(':id')
-    deleteUser(@Param('id') id: number) {
-      return this.userService.deleteUser(id);
+    deleteUser(@Param('id', ParseIntPipe) id: number) { // Usa ParseIntPipe para convertir el parámetro de ruta en un número entero
+        return this.userService.deleteUser(id);
     }
-
 }
