@@ -30,6 +30,7 @@ export class UserController{
     async login(@Body() { username, password }: { username: string; password: string }) {
       const user = await this.userService.findByUsername(username);
 
+<<<<<<< HEAD
       if (!user) {
         throw new UnauthorizedException('Credenciales incorrectas');
       }
@@ -41,6 +42,19 @@ export class UserController{
 
       }
     }
+=======
+    if (!user) {
+      throw new UnauthorizedException('Credenciales incorrectas');
+    }
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+        if (!passwordMatch) {
+            throw new UnauthorizedException('Credenciales incorrectas');
+        }
+
+    return { success: true, user: { username: user.username } };
+  }
+>>>>>>> 417db070 (a)
 
     @Get(':id')
     deleteUser(@Param('id', ParseIntPipe) id: number) { // Usa ParseIntPipe para convertir el parámetro de ruta en un número entero
