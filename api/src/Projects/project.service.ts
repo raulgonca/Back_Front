@@ -10,9 +10,9 @@ export class ProjectService {
     private readonly projectRepository: Repository<Project>,
   ) {}
 
-  async createProject(nameproject: string, description: string, fechaInicio: Date, fechaFinalizacion: Date): Promise<Project> {
-    const project = this.projectRepository.create({ nameproject, description, fechaInicio, fechaFinalizacion });
-    return this.projectRepository.save(project);
+  async createProject(CreateProjectDto): Promise<Project> {
+    const project = this.projectRepository.create(CreateProjectDto)
+    return this.projectRepository.save(CreateProjectDto);
   }
 
   async getAllProject(): Promise<Project[]> {

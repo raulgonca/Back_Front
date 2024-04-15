@@ -4,14 +4,20 @@ import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common'
 import { Controller, Get, Post, Body, Param, Delete , Put } from '@nestjs/common';
 >>>>>>> 28641bed (10/4 update Project)
 import { ProjectService } from './project.service';
+import { CreateProjectDto } from 'src/DTOs/create-project.dto';
 
 @Controller('projects')
 export class ProjectController {
   constructor(private readonly projectService: ProjectService) {}
 
   @Post()
+<<<<<<< HEAD
   createProject(@Body() { nameproject, description, fechaInicio, fechaFinalizacion }: { nameproject: string; description: string ,fechaInicio : Date, fechaFinalizacion: Date } ) {
     return this.projectService.createProject(nameproject, description, fechaInicio, fechaFinalizacion);
+=======
+  createProject(@Body() createProjectDto : CreateProjectDto){
+    return this.projectService.createProject( createProjectDto );
+>>>>>>> 26191f5a (15/04 update)
   }
 
   @Get()
