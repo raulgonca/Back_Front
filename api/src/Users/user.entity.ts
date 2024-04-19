@@ -8,7 +8,7 @@ export class User {
     @Column()
     username : string;
 
-    @Column('jsonb', { nullable: true })
+    @Column()
     password : string;
 }
 
