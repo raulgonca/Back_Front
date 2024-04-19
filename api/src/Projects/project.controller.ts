@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
-=======
 import { Controller, Get, Post, Body, Param, Delete , Put } from '@nestjs/common';
->>>>>>> 28641bed (10/4 update Project)
 import { ProjectService } from './project.service';
 import { CreateProjectDto } from 'src/DTOs/create-project.dto';
 
@@ -11,13 +7,9 @@ export class ProjectController {
   constructor(private readonly projectService: ProjectService) {}
 
   @Post()
-<<<<<<< HEAD
-  createProject(@Body() { nameproject, description, fechaInicio, fechaFinalizacion }: { nameproject: string; description: string ,fechaInicio : Date, fechaFinalizacion: Date } ) {
-    return this.projectService.createProject(nameproject, description, fechaInicio, fechaFinalizacion);
-=======
-  createProject(@Body() createProjectDto : CreateProjectDto){
+  
+    createProject(@Body() createProjectDto : CreateProjectDto){
     return this.projectService.createProject( createProjectDto );
->>>>>>> 26191f5a (15/04 update)
   }
 
   @Get()
@@ -31,16 +23,7 @@ export class ProjectController {
   }
 
   @Put(':id')
-<<<<<<< HEAD
-  updateProject(@Param('id') id: string, @Body() { nameproject, description, fechaInicio, fechaFinalizacion } : { nameproject: string, description: string , fechaInicio : Date , fechaFinalizacion: Date } ) {
-    return this.projectService.updateProject(+id, nameproject, description, fechaInicio, fechaFinalizacion);
-  }
-
-  
-=======
-  async updateProject(
-    @Param('id') id: string,
-    @Body() { nameproject, description, fechaInicio, fechaFinalizacion }: { nameproject: string, description: string , fechaInicio : Date , fechaFinalizacion: Date } ) {
+  async updateProject(@Param('id') id: string,@Body() { nameproject, description, fechaInicio, fechaFinalizacion }: { nameproject: string, description: string , fechaInicio : Date , fechaFinalizacion: Date } ) {
       // Obtener el proyecto existente
       const existingProject = await this.projectService.findOne(+id);
 
@@ -54,7 +37,6 @@ export class ProjectController {
       return this.projectService.updateProject(+id, nameproject, description, fechaInicio, fechaFinalizacion);
   }
 
->>>>>>> 28641bed (10/4 update Project)
 }
 
 

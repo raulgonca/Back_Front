@@ -23,16 +23,10 @@ export class ProjectService {
     await this.projectRepository.delete(id);
   }
 
-<<<<<<< HEAD
-  async findOne(id: number): Promise<Project> {
-    throw new Error('Method not implemented.');
-  }
-=======
   async findOne(id: number): Promise<Project | undefined> {
     return this.projectRepository.findOne({ where: { id } });
   }
   
->>>>>>> 28641bed (10/4 update Project)
 
   async updateProject(
     id: number,
@@ -44,16 +38,11 @@ export class ProjectService {
     const project = await this.projectRepository.findOne({ where: { id } });
 
     if (!project) {
-<<<<<<< HEAD
       throw new Error(`Proyecto con id ${id} no encontrado`);
     }
 
-=======
-      throw new Error(`Project with id ${id} not found`);
-    }
 
     // Aquí puedes realizar cualquier lógica adicional que necesites para la actualización del proyecto
->>>>>>> 28641bed (10/4 update Project)
     project.nameproject = nameproject;
     project.description = description;
     project.fechaInicio = fechaInicio;
@@ -61,10 +50,7 @@ export class ProjectService {
 
     return this.projectRepository.save(project);
   }
-<<<<<<< HEAD
 
 
 }
-=======
-}
->>>>>>> 28641bed (10/4 update Project)
+

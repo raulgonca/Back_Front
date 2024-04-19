@@ -2,19 +2,12 @@ import { ConflictException, Injectable } from "@nestjs/common";
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository} from 'typeorm';
 import { User } from './user.entity';
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
+
 import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiParam } from '@nestjs/swagger';
-import { CreateUserDto } from "src/DTOs/create-user.dto";
 import * as bcrypt from "bcryptjs";
 import { JwtService } from "@nestjs/jwt";
->>>>>>> 26191f5a (15/04 update)
-=======
+
 import { CreateUserDto } from '../DTOs/create-user.dto';
-import * as bcrypt from "bcryptjs";
-import { ApiBody, ApiOperation, ApiParam, ApiResponse } from "@nestjs/swagger";
->>>>>>> 4eed7f7a (prueba)
 
 @Injectable()
 export class UserService {
@@ -23,16 +16,7 @@ export class UserService {
         @InjectRepository(User)
         private readonly userRepository: Repository<User>,
       ) {}
-
-<<<<<<< HEAD
-    async createUser(username: string, password: string) : Promise<User>{
-        const poll = this.userRepository.create({ username, password});
-        return this.userRepository.save(poll);
-    }
-
-    async findByUsername(username: string): Promise<User>{
-        return this.userRepository.findOne({ where : { username }});
-=======
+   
     @ApiOperation({ summary: 'Crear un nuevo usuario' }) // Descripción de la operación
     @ApiBody({ type: User }) // Especifica el tipo de cuerpo esperado en la solicitud
     async createUser(createUserDto: CreateUserDto): Promise<User> {
@@ -58,33 +42,16 @@ export class UserService {
     @ApiResponse({ status: 200, description: 'Usuario encontrado', type: User }) // Respuesta exitosa
     async findByUsername(username: string): Promise<User> {
         return this.userRepository.findOne({ where: { username } });
->>>>>>> 26191f5a (15/04 update)
     }
 
-<<<<<<< HEAD
-    async getAllUser(): Promise<User[]>{
-        return this.userRepository.find();
-=======
-    @ApiOperation({ summary: 'Obtener todos los usuarios' }) // Descripción de la operación
+        @ApiOperation({ summary: 'Obtener todos los usuarios' }) // Descripción de la operación
     @ApiResponse({ status: 200, description: 'Lista de usuarios', type: [User] }) // Respuesta exitosa
     async getAllUsers(): Promise<User[]> {
     return this.userRepository.find();
->>>>>>> 4eed7f7a (prueba)
     }
 
     async deleteUser(id: number): Promise<void> {
-<<<<<<< HEAD
         await this.userRepository.delete(id);
-<<<<<<< HEAD
-      }
-
-    
-
-}
-=======
-=======
-    await this.userRepository.delete(id);
->>>>>>> 4eed7f7a (prueba)
     }
 
     async validateUser(username: string, password: string): Promise<any> {
@@ -95,9 +62,7 @@ export class UserService {
           return null;
     }
 }
-<<<<<<< HEAD
->>>>>>> 26191f5a (15/04 update)
-=======
+
 //import { ConflictException, Injectable } from "@nestjs/common";
 //import { InjectRepository } from '@nestjs/typeorm';
 //import { Repository } from 'typeorm';
@@ -168,4 +133,3 @@ export class UserService {
 //        return this.jwtService.sign(payload);
 //      }
 
->>>>>>> 4eed7f7a (prueba)

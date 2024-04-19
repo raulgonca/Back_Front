@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import axios from 'axios';
 import * as dotenv from 'dotenv';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   dotenv.config();
@@ -17,10 +18,6 @@ async function bootstrap() {
     credentials: true, // Permitir enviar cookies de autenticación
   });
 
-<<<<<<< HEAD
-=======
-
-
   const config = new DocumentBuilder()
     .setTitle('Stafko')
     .setDescription('Documentacion del codigo Backend')
@@ -32,7 +29,6 @@ async function bootstrap() {
 
   SwaggerModule.setup('api', app, document);
 
->>>>>>> 5c4e9098 (19/4 arreglo push)
   await app.listen(3000);
 }
 
