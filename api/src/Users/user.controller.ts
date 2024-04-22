@@ -1,13 +1,9 @@
-
-
 import { Controller, Get, Post, Body, Param, ParseIntPipe, ConflictException, UnauthorizedException } from '@nestjs/common';
 import { UserService } from './user.service';
 import * as bcrypt from 'bcrypt';
 import { ApiTags, ApiBody, ApiResponse, ApiParam } from '@nestjs/swagger';
 import { CreateUserDto } from 'src/DTOs/create-user.dto';
-//simport { User } from './user.entity';
-//simport { LoginDto } from 'src/DTOs/login.dto';
-//simport { AuthResponseDto } from 'src/DTOs/auth.dto';
+import { LoginDto } from 'src/DTOs/login.dto';
 //import { AuthService } from 'src/auth/auth.service';
 
 @Controller('users')
@@ -37,20 +33,17 @@ export class UserController {
         return this.userService.getAllUsers();
     }
 
-    @Post('login')
-    async login(@Body() { username, password }: { username: string; password: string }) {
-      const user = await this.userService.findByUsername(username);
-
-        if (!user) {
+    @Post('/login')
+    async login(@Body() { LoginDto }) {
+      const user = await this.userService.findByUsername(LoginDto);
+      if (!user) {
             throw new UnauthorizedException('Credenciales incorrectas');
         }
-
-        const passwordMatch = await bcrypt.compare(password, user.password);
+     const passwordMatch = await bcrypt.compare(LoginDto);
             if (!passwordMatch) {
                 throw new UnauthorizedException('Credenciales incorrectas');
             }
-
-        return { success: true, user: { username: user.username } };
+       return { success: true, user: { username: user.username } };
     }
     
     @Get(':id')
@@ -58,43 +51,10 @@ export class UserController {
         return this.userService.deleteUser(id);
     }
 
+    
+
+
 }
-
-
-//   @Post('login')
-//   async login(@Body() { username, password }: { username: string; password: string }) {
-//       const user = await this.userService.findByUsername(username);
-//
-//   if (!user) {
-//     throw new UnauthorizedException('Credenciales incorrectas');
-//   }
-//
-//   const passwordMatch = await bcrypt.compare(password, user.password);
-//       if (!passwordMatch) {
-//           throw new UnauthorizedException('Credenciales incorrectas');
-//       }
-//
-//   return { success: true, user: { username: user.username } };
-//}
-//    @Post('/login')
-//    async login(@Body() { nombre, password }: { nombre: string; password: string }) {
-//        const user = await this.userService.findByUsername(nombre);
-//    
-//        if (!user) {
-//          throw new UnauthorizedException("Credenciales incorrectas");
-//        }
-//    
-//        const passwordMatch = await bcrypt.compare(password, user.password);
-//        if (passwordMatch) {
-//          return {
-//            success: true,
-//            user: { usaename: user.username },
-//          };
-//        }
-//    
-//        throw new UnauthorizedException("Credenciales incorrectas");
-//      }
-
 
 
 

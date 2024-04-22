@@ -37,6 +37,9 @@ export class ProjectController {
       return this.projectService.updateProject(+id, nameproject, description, fechaInicio, fechaFinalizacion);
   }
 
+  @Delete(':id')
+  deleteProject(@Param('id') id: number) {
+    return this.projectService.deleteProject(id);
+  }
+
 }
-
-
