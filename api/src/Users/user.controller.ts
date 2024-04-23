@@ -1,7 +1,7 @@
-import { Controller, Get, Post, Body, Param, ParseIntPipe, ConflictException, UnauthorizedException } from '@nestjs/common';
+import { Controller, Get, Post, Body, ConflictException, UnauthorizedException } from '@nestjs/common';
 import { UserService } from './user.service';
 import * as bcrypt from 'bcrypt';
-import { ApiTags, ApiBody, ApiResponse, ApiParam } from '@nestjs/swagger';
+import { ApiTags, ApiBody, ApiResponse,  } from '@nestjs/swagger';
 import { CreateUserDto } from 'src/DTOs/create-user.dto';
 import { LoginDto } from 'src/DTOs/login.dto';
 //import { AuthService } from 'src/auth/auth.service';
@@ -34,22 +34,18 @@ export class UserController {
     }
 
     @Post('/login')
-    async login(@Body() { LoginDto }) {
-      const user = await this.userService.findByUsername(LoginDto);
-      if (!user) {
+    async login(@Body() loginDto: LoginDto) {
+    const user = await this.userService.findByUsername(loginDto.username);
+        if (!user) {
             throw new UnauthorizedException('Credenciales incorrectas');
         }
-     const passwordMatch = await bcrypt.compare(user.password);
-            if (!passwordMatch) {
-                throw new UnauthorizedException('Credenciales incorrectas');
-            }
-       return { success: true, user: { username: user.username } };
+    const passwordMatch = await bcrypt.compare(loginDto.password, user.password);
+        if (!passwordMatch) {
+            throw new UnauthorizedException('Credenciales incorrectas');
+        }
+   return { success: true, user: { username: user.username } };
     }
-    
-    @Get(':id')
-    deleteUser(@Param('id', ParseIntPipe) id: number) { // Usa ParseIntPipe para convertir el parámetro de ruta en un número entero
-        return this.userService.deleteUser(id);
-    }
+
 
     
 

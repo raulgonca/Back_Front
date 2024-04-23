@@ -1,4 +1,3 @@
-import { User } from '../Users/user.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 
 @Entity()
@@ -18,7 +17,5 @@ export class Project {
   @Column('date')
   fechaFinalizacion: Date;
 
-  @ManyToOne(() => User, user => user.projects)
-  creator: User;
-    User: any;
+
 }

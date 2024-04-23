@@ -1,34 +1,30 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './Users/user.entity';
-import { UserService } from './Users/user.service';
-import { UserController } from './Users/user.controller';
-import { Project } from './Projects/project.entity';
-import { ProjectService } from './Projects/project.service';
-import { ProjectController } from './Projects/project.controller';
-import axios from 'axios';
+import { UserModule } from './Users/user.module'; // Importa UserModule
+import { ProjectModule } from './Projects/project.module';
+import { ProjectUserModule } from './projects_users/project-user.module';
+import config from './config';
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'db',
-      port: 5432,
-      username: 'user',
-      password: 'password',
-      database: 'postgres',
-      entities: [User, Project],
-      synchronize: true,
+      type: config.dbType,
+      host: config.dbHost,
+      port: config.dbPort,
+      username: config.dbUsername,
+      password: config.dbPassword,
+      database: config.dbDatabase,
+      entities: config.typeormEntities,
+      synchronize: config.typeormSynchronize,
     }),
-    TypeOrmModule.forFeature([User, Project]),
+    UserModule, // Asegúrate de importar UserModule aquí
+    ProjectModule,
+    ProjectUserModule
   ],
-  providers: [UserService, ProjectService],
-  controllers: [UserController, ProjectController],
+  providers: [],
+  controllers: [],
 })
-export class AppModule {
-  constructor() {
-    // Configurar axios globalmente con la URL base y las opciones de CORS
-    axios.defaults.baseURL = 'http://localhost:3000'; // Establecer la URL base de tu servidor NestJS
-    axios.defaults.withCredentials = true; // Habilitar el envío de cookies de autenticación
-  }
-}
+export class AppModule {}
