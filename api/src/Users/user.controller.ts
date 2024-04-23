@@ -39,7 +39,7 @@ export class UserController {
       if (!user) {
             throw new UnauthorizedException('Credenciales incorrectas');
         }
-     const passwordMatch = await bcrypt.compare(LoginDto);
+     const passwordMatch = await bcrypt.compare(user.password);
             if (!passwordMatch) {
                 throw new UnauthorizedException('Credenciales incorrectas');
             }
