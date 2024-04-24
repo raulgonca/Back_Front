@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserModule } from './Users/user.module'; // Importa UserModule
+import { UserModule } from './Users/user.module';  
 import { ProjectModule } from './Projects/project.module';
 import { ProjectUserModule } from './projects_users/project-user.module';
 import config from './config';
@@ -19,12 +19,13 @@ dotenv.config();
       database: config.dbDatabase,
       entities: config.typeormEntities,
       synchronize: config.typeormSynchronize,
+      migrations: config.typeormMigrations,
     }),
-    UserModule, // Asegúrate de importar UserModule aquí
+    UserModule,
     ProjectModule,
     ProjectUserModule
   ],
-  providers: [],
+  providers: [UserModule],
   controllers: [],
 })
 export class AppModule {}
