@@ -11,6 +11,7 @@ import { LoginDto } from 'src/DTOs/login.dto';
 export class UserController {
     constructor(private readonly userService: UserService) {}
 
+//Creamos los usuarios
     @Post()
     @ApiBody({ type: String, description: 'Nombre de usuario y contraseña' }) // Describe el tipo de cuerpo esperado en la solicitud
     @ApiResponse({ status: 201, description: 'Usuario creado' }) // Respuesta exitosa
@@ -27,28 +28,34 @@ export class UserController {
         }
     }
   
-//Devuelve los usuarios
+//Devuelve todos los usuarios
     @Get()
     GetAllUser(){
         return this.userService.getAllUsers();
     }
 
+
+//login con credenciales de usuario
     @Post('/login')
     async login(@Body() loginDto: LoginDto) {
-    const user = await this.userService.findByUsername(loginDto.username);
-        if (!user) {
-            throw new UnauthorizedException('Credenciales incorrectas');
-        }
-    const passwordMatch = await bcrypt.compare(loginDto.password, user.password);
-        if (!passwordMatch) {
-            throw new UnauthorizedException('Credenciales incorrectas');
-        }
-   return { success: true, user: { username: user.username } };
+    try {
+      const user = await this.userService.findByUsername(loginDto.username);
+
+      if (!user) {
+        throw new UnauthorizedException('Usuario incorrecto');
+      }
+
+      const passwordMatch = await bcrypt.compare(loginDto.password, user.password);
+
+      if (!passwordMatch) {
+        throw new UnauthorizedException('Contraseña incorrecta');
+      }
+
+      return { success: true, user: { username: user.username } };
+    } catch (error) {
+      throw new UnauthorizedException('Credenciales inválidas');
     }
-
-
-    
-
+  }
 
 }
 

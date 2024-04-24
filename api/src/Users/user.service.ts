@@ -1,17 +1,16 @@
 import { ConflictException, Injectable } from "@nestjs/common";
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
-import { UserRepository } from './user.repository'; // Importa UserRepository
 import { CreateUserDto } from '../DTOs/create-user.dto';
 import * as bcrypt from "bcryptjs";
 import { ApiBody, ApiOperation, ApiParam, ApiResponse } from "@nestjs/swagger";
+import { Repository } from "typeorm";
 
 @Injectable()
 export class UserService {
-  userService: any;
     constructor(
-        @InjectRepository(UserRepository) // Usa UserRepository en lugar de User
-        private readonly userRepository: UserRepository,
+        @InjectRepository(User)
+        private readonly userRepository: Repository<User>,
       ) {}
       
 
@@ -53,7 +52,7 @@ export class UserService {
     }
 
     async validateUser(username: string, password: string): Promise<any> {
-    const user = await this.userService.findByUsername(username);
+    const user = await this.findByUsername(username);
       if (user && user.password === password) {
           return user;
     }

@@ -6,10 +6,11 @@ import { CreateProjectUserDto } from "../DTOs/create-project-user.dto"
 
 @Injectable()
 export class ProjectUserService {
-  findByUsername(username: string): UserProject[] | PromiseLike<UserProject[]> {
+  
+  findByUsername(_username: string): UserProject[] | PromiseLike<UserProject[]> {
       throw new Error("Method not implemented.");
   }
-  findByrepoId(projectId: number): UserProject[] | PromiseLike<UserProject[]> {
+  findByrepoId(_projectId: number): UserProject[] | PromiseLike<UserProject[]> {
       throw new Error("Method not implemented.");
   }
   constructor(
