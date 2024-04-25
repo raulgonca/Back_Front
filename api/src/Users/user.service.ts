@@ -19,14 +19,18 @@ export class UserService {
     async createUser(createUserDto: CreateUserDto): Promise<User> {
       const { username, password } = createUserDto;
          // Verifica si ya existe un usuario con el mismo nombre de usuario
-      const userInvalidated = await this.userRepository.findOne({ where: [{ username }],
+      const userInvalidated = await this.userRepository.findOne({
+        where: [{ username }],
       });
-        if (userInvalidated) {
-          throw new ConflictException('El nombre de usuario ya existe');
+         if (userInvalidated) {
+        throw new ConflictException('El nombre de usuario ya existe');
       }
          // Hashea la contraseña antes de guardarla en la base de datos
       const hashedPassword = await bcrypt.hash(password, 10);
-      const newUser = this.userRepository.create({ username, password: hashedPassword,});
+      const newUser = this.userRepository.create({
+        username,
+        password: hashedPassword,
+      });
          return this.userRepository.save(newUser);
     }   
 

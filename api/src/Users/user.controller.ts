@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, ConflictException, UnauthorizedException, Delete, ParseIntPipe, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, ConflictException, UnauthorizedException } from '@nestjs/common';
 import { UserService } from './user.service';
 import * as bcrypt from 'bcrypt';
 import { ApiTags, ApiBody, ApiResponse,  } from '@nestjs/swagger';
@@ -17,8 +17,8 @@ export class UserController {
     async createUser(@Body() createUserDto: CreateUserDto) {
         try {
             const newUser = await this.userService.createUser(createUserDto);
-            return { menssage : "usuario Creado con exito" , User : newUser };
-      
+            return { menssage : "usuario Creado con existo" , User : newUser };
+        
         } catch (error) {
             if (error instanceof ConflictException){
                 throw new ConflictException("Erro al crear el usuario revise las credenciales ")
@@ -55,13 +55,6 @@ export class UserController {
       throw new UnauthorizedException('Credenciales inválidas');
     }
   }
-
-  @Delete(':id')
-  deleteUser(@Param('id', ParseIntPipe) id: number) { 
-      return this.userService.deleteUser(id);
-  }
-
-  
 
 }
 

@@ -13,5 +13,9 @@ export class CreateProjectDto {
     @ApiProperty({ description: 'Fecha de Finalización' })
     fechaFinalizacion: Date;
 
+    @ApiProperty({ description: 'Colaboradores agregados' })
+    colaborador : string;
+
+
 
 }

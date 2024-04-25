@@ -7,8 +7,7 @@ export class ProjectController {
   constructor(private readonly projectService: ProjectService) {}
 
   @Post()
-  
-    createProject(@Body() createProjectDto : CreateProjectDto){
+  createProject(@Body() createProjectDto : CreateProjectDto){
     return this.projectService.createProject( createProjectDto );
   }
 
@@ -23,7 +22,7 @@ export class ProjectController {
   }
 
   @Put(':id')
-  async updateProject(@Param('id') id: string,@Body() { nameproject, description, fechaInicio, fechaFinalizacion }: { nameproject: string, description: string , fechaInicio : Date , fechaFinalizacion: Date } ) {
+  async updateProject(@Param('id') id: string,@Body() { nameproject, description, fechaInicio, fechaFinalizacion, colaborador }: { nameproject : string, description : string , fechaInicio : Date , fechaFinalizacion : Date , colaborador : []} ) {
       // Obtener el proyecto existente
       const existingProject = await this.projectService.findOne(+id);
 
@@ -34,7 +33,7 @@ export class ProjectController {
       }
 
       // Llamar al servicio para actualizar el proyecto
-      return this.projectService.updateProject(+id, nameproject, description, fechaInicio, fechaFinalizacion);
+      return this.projectService.updateProject(+id, nameproject, description, fechaInicio, fechaFinalizacion, colaborador);
   }
 
   @Delete(':id')

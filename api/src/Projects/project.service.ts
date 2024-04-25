@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FindOneOptions, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Project } from './project.entity';
 
 @Injectable()
@@ -34,6 +34,7 @@ export class ProjectService {
     description: string,
     fechaInicio: Date,
     fechaFinalizacion: Date,
+    colaborador : [],
   ): Promise<Project> {
     const project = await this.projectRepository.findOne({ where: { id } });
 
@@ -47,6 +48,7 @@ export class ProjectService {
     project.description = description;
     project.fechaInicio = fechaInicio;
     project.fechaFinalizacion = fechaFinalizacion;
+    project.colaboradores = colaborador
 
     return this.projectRepository.save(project);
   }
