@@ -41,7 +41,7 @@ export class UserService {
         return this.userRepository.findOne({ where: { username } });
     }
 
-        @ApiOperation({ summary: 'Obtener todos los usuarios' }) // Descripción de la operación
+    @ApiOperation({ summary: 'Obtener todos los usuarios' }) // Descripción de la operación
     @ApiResponse({ status: 200, description: 'Lista de usuarios', type: [User] }) // Respuesta exitosa
     async getAllUsers(): Promise<User[]> {
     return this.userRepository.find();
@@ -51,11 +51,11 @@ export class UserService {
         await this.userRepository.delete(id);
     }
 
-    async validateUser(username: string, password: string): Promise<any> {
-    const user = await this.findByUsername(username);
-      if (user && user.password === password) {
-          return user;
-    }
-          return null;
-    }
+    //async validateUser(username: string, password: string): Promise<any> {
+    //const user = await this.findByUsername(username);
+    //  if (user && user.password === password) {
+    //      return user;
+    //}
+    //      return null;
+    //}
 }

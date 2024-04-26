@@ -1,24 +1,21 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from 'typeorm';
-import { User } from '../Users/user.entity'; // Asumiendo que tienes un modelo de usuario
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, ManyToMany, JoinTable } from 'typeorm';
+import { User } from '../Users/user.entity';
 
 @Entity()
 export class Project {
   @PrimaryGeneratedColumn()
-  id : number;
+  id: number;
 
   @Column()
-  nameproject : string;
+  name: string;
 
-  @Column('text')
-  description : string;
+  @Column()
+  description: string;
 
-  @Column('date')
-  fechaInicio : Date;
+  @ManyToOne(() => User, user => user.ownedProjects)
+  owner: User;
 
-  @Column('date')
-  fechaFinalizacion : Date;
-
-  @ManyToMany(() => User) // Definir la relación Many-to-Many con los usuarios
-  @JoinTable() // Tabla de unión
-  colaboradores: User[];
+  @ManyToMany(() => User, user => user.projects)
+  @JoinTable()
+  collaborators: User[];
 }
