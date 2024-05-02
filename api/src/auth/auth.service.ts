@@ -1,8 +1,12 @@
-<<<<<<< HEAD
-import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../Users/user.entity'; // Importa la entidad User
+import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
+import * as bcrypt from "bcryptjs";
+import * as jwt from "jsonwebtoken";
+import { CreateUserDto } from 'src/DTOs/create-user.dto';
+import { JwtPayload } from './jwt-payload.interface';
+import { LoginDto } from 'src/DTOs/login.dto';
 
 @Injectable()
 export class AuthService {
@@ -16,30 +20,6 @@ export class AuthService {
     const payload = { username: user.username, sub: user.id };
     return this.jwtService.sign(payload);
   }
-
-  async findByUsername(username: string): Promise<User | undefined> {
-    return this.userRepository.findOne({ where: { username } });
-  }
-=======
-import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
-import { User } from '../Users/user.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import * as bcrypt from "bcryptjs";
-import * as jwt from "jsonwebtoken";
-import { CreateUserDto } from 'src/DTOs/create-user.dto';
-import { JwtPayload } from './jwt-payload.interface';
-import { LoginDto } from 'src/DTOs/login.dto';
-
-
-@Injectable()
-export class AuthService {
-  private readonly JWT_SECRET = process.env.JWT_SECRET;
-  
-  constructor(
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>
-  ) {}
 
 //Crear Usuarios
   async createUser(createUserDto: CreateUserDto): Promise<User> {
@@ -109,5 +89,4 @@ export class AuthService {
     }
           return null;
   }
->>>>>>> 1bb27441 (2/5 arreglos)
 }

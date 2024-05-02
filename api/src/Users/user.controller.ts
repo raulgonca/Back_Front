@@ -1,19 +1,15 @@
-import { Controller, Get, Post, Body, ConflictException } from '@nestjs/common';
-import { UserService } from './user.service';
-<<<<<<< HEAD
+
 import { ApiTags, ApiBody, ApiResponse } from '@nestjs/swagger';
 import { CreateUserDto } from 'src/DTOs/create-user.dto';
-=======
-import { ApiTags } from '@nestjs/swagger';
->>>>>>> 1bb27441 (2/5 arreglos)
 import { User } from './user.entity';
+import { Body, ConflictException, Controller, Get, Post } from '@nestjs/common';
+import { UserService } from './user.service';
 
 @Controller('users')
 @ApiTags('Users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-<<<<<<< HEAD
   // Crear un nuevo usuario
   @Post()
   @ApiBody({ type: CreateUserDto, description: 'Datos para crear un nuevo usuario' })
@@ -36,14 +32,6 @@ export class UserController {
     return this.userService.getAllUsers();
   }
 
-=======
-  // Obtener todos los usuarios
-  @Get()
-  async getAllUsers(): Promise<User[]> {
-    return this.userService.getAllUsers();
-  }
-
->>>>>>> 1bb27441 (2/5 arreglos)
   // Buscar usuario por nombre de usuario
   @Post('username')
   async findByUsername(@Body() body: { username: string }): Promise<User | undefined> {

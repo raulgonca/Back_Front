@@ -1,22 +1,15 @@
-<<<<<<< HEAD
 //auth.controller.ts
 import { Controller, Post, Body, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from 'src/DTOs/login.dto';
 import * as bcrypt from 'bcrypt';
-=======
-import { Controller, Post, Body, UnauthorizedException } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { LoginDto } from '../DTOs/login.dto';
 import { CreateUserDto } from 'src/DTOs/create-user.dto';
->>>>>>> 1bb27441 (2/5 arreglos)
 
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-<<<<<<< HEAD
     //login con credenciales de usuario
     @Post('/login')
     async login(@Body() loginDto: LoginDto) {
@@ -46,21 +39,7 @@ export class AuthController {
     }
           return null;
     }
-=======
-  @Post('/login')
-  async login(@Body() loginDto: LoginDto) {
-    const token = await this.authService.login(loginDto);
-
-    if (!token) {
-      throw new UnauthorizedException("Las credencialesintroducidas son incorrectas");
-    }
-
-    return {
-      success: true,
-      token: token,
-    };
-  }  
- 
+  
   @Post("/register")
   async createUser(@Body() createUserDto : CreateUserDto){
     try {
@@ -92,6 +71,5 @@ export class AuthController {
       throw new UnauthorizedException("Token inválido");
     }
   }
->>>>>>> 1bb27441 (2/5 arreglos)
 
 }

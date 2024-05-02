@@ -20,13 +20,10 @@ export class ProjectService {
       .where('project.ownerId = :userId OR collaborators.id = :userId', { userId })
       .getMany();
   }
-<<<<<<< HEAD
-=======
 
   async getAllUsers(): Promise<Project[]> {
     return this.projectRepository.find();
     }
 
 
->>>>>>> 1bb27441 (2/5 arreglos)
 }
