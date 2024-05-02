@@ -1,7 +1,7 @@
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../Users/user.entity'; // Importa la entidad User
-import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { ConflictException, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 import { CreateUserDto } from 'src/DTOs/create-user.dto';
@@ -14,6 +14,7 @@ export class AuthService {
     @InjectRepository(User)
     private readonly userRepository,
     private readonly jwtService: JwtService, // Inyecta el servicio JWT
+    @Inject('JWT_SECRET') private readonly JWT_SECRET: string,
   ) {}
 
   async generateToken(user: User): Promise<string> {
