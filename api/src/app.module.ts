@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserModule } from './Users/user.module'; // Importa UserModule
+import { UserModule } from './Users/user.module'; 
 import { ProjectModule } from './Projects/project.module';
 import { ProjectUserModule } from './projects_users/project-user.module';
 import { AuthModule } from './auth/auth.module';
@@ -28,7 +28,7 @@ dotenv.config();
     AuthModule
     
   ],
-  providers: [UserModule],
+  providers: [],
   controllers: [],
 })
 export class AppModule {}

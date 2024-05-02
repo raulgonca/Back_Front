@@ -11,4 +11,9 @@ export class CreateUserDto {
     @IsNotEmpty()
     @ApiProperty({ description: 'Contraseña del usuario' })
     password: string;
+
+    @IsEmail()
+    @IsNotEmpty()
+    @ApiProperty({ description: 'Correo del usuario' })
+    gmail: string;
 }

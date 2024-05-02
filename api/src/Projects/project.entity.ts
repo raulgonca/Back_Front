@@ -7,7 +7,11 @@ export class Project {
   id: number;
 
   @Column()
+<<<<<<< HEAD
   name: string;
+=======
+  nameproject: string;
+>>>>>>> 1bb27441 (2/5 arreglos)
 
   @Column()
   description: string;

@@ -5,6 +5,9 @@ import { Project } from './project.entity';
 
 @Injectable()
 export class ProjectService {
+  getAllProject(): Project[] | PromiseLike<Project[]> {
+    throw new Error('Method not implemented.');
+  }
   constructor(
     @InjectRepository(Project)
     private projectRepository: Repository<Project>,
@@ -17,4 +20,13 @@ export class ProjectService {
       .where('project.ownerId = :userId OR collaborators.id = :userId', { userId })
       .getMany();
   }
+<<<<<<< HEAD
+=======
+
+  async getAllUsers(): Promise<Project[]> {
+    return this.projectRepository.find();
+    }
+
+
+>>>>>>> 1bb27441 (2/5 arreglos)
 }
