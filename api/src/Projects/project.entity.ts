@@ -7,16 +7,22 @@ export class Project {
   id: number;
 
   @Column()
-  name: string;
-  nameproject: string;
+  nameproject : string;
 
-  @Column()
-  description: string;
+  @Column('jsonb', { nullable : true })
+  description : string;
+
+  @Column('jsonb', { nullable : true })
+  fechaInicio: Date;
+  
+  @Column('jsonb', { nullable : true })
+  fechaFinalizacion: Date;
 
   @ManyToOne(() => User, user => user.ownedProjects)
-  owner: User;
+  owner : User;
+
 
   @ManyToMany(() => User, user => user.projects)
   @JoinTable()
-  collaborators: User[];
+  collaborators : User[];
 }

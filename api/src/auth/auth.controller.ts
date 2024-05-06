@@ -4,42 +4,15 @@ import { AuthService } from './auth.service';
 import { LoginDto } from 'src/DTOs/login.dto';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from 'src/DTOs/create-user.dto';
+import { User } from 'src/Users/user.entity';
 
 
 @Controller('auth')
 export class AuthController {
+  userService: any;
   constructor(private readonly authService: AuthService) {}
 
-    //login con credenciales de usuario
-    @Post('/login')
-    async login(@Body() loginDto: LoginDto) {
-    try {
-      const user = await this.authService.findByUsername(loginDto.username);
-
-      if (!user) {
-        throw new UnauthorizedException('Usuario incorrecto');
-      }
-
-      const passwordMatch = await bcrypt.compare(loginDto.password, loginDto.password);
-
-      if (!passwordMatch) {
-        throw new UnauthorizedException('Contraseña incorrecta');
-      }
-
-      return { success: true, user: { username: user.username } };
-    } catch (error) {
-      throw new UnauthorizedException('Credenciales inválidas');
-    }
-  }
-
-  async validateUser(username: string, password: string): Promise<any> {
-    const user = await this.authService.findByUsername(username);
-      if (user && user.password === password) {
-          return user;
-    }
-          return null;
-    }
-  
+  //login con credenciales de usuario
   @Post("/register")
   async createUser(@Body() createUserDto : CreateUserDto){
     try {
@@ -62,6 +35,40 @@ export class AuthController {
     }
   }
 
+    //login con credenciales de usuario
+    @Post('/login')
+    async login(@Body() loginDto: LoginDto) {
+      try {
+        const user = await this.authService.findByUsername(loginDto.username);
+  
+        if (!user) {
+          throw new UnauthorizedException('Usuario incorrecto');
+        }
+  
+        const passwordMatch = await bcrypt.compare(loginDto.password, user.password);
+  
+        if (!passwordMatch) {
+          throw new UnauthorizedException('Contraseña incorrecta');
+        }
+  
+        // Si las credenciales son válidas, puedes devolver una respuesta exitosa
+        return { success: true, user: { username: user.username } };
+      } catch (error) {
+        // Si ocurre algún error durante la autenticación, devuelve una excepción no autorizada genérica
+        throw new UnauthorizedException('Credenciales inválidas');
+      }
+    }
+   
+
+  async validateUser(username: string, password: string): Promise<any> {
+    const user = await this.authService.findByUsername(username);
+      if (user && user.password === password) {
+          return user;
+    }
+          return null;
+    }
+  
+
   @Post("verificar-token")
   async verificarToken(@Body() { token }: { token: string }) {
     try {
@@ -71,5 +78,5 @@ export class AuthController {
       throw new UnauthorizedException("Token inválido");
     }
   }
-
+  
 }

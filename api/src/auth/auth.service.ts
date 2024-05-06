@@ -1,26 +1,21 @@
-import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from '../Users/user.entity'; // Importa la entidad User
-import { ConflictException, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import { User } from '../Users/user.entity'; 
+import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 import { CreateUserDto } from 'src/DTOs/create-user.dto';
 import { JwtPayload } from './jwt-payload.interface';
 import { LoginDto } from 'src/DTOs/login.dto';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AuthService {
+  private readonly JWT_SECRET = process.env.JWT_SECRET;
+
   constructor(
     @InjectRepository(User)
-    private readonly userRepository,
-    private readonly jwtService: JwtService, // Inyecta el servicio JWT
-    @Inject('JWT_SECRET') private readonly JWT_SECRET: string,
+    private readonly userRepository: Repository<User>,
   ) {}
-
-  async generateToken(user: User): Promise<string> {
-    const payload = { username: user.username, sub: user.id };
-    return this.jwtService.sign(payload);
-  }
 
 //Crear Usuarios
   async createUser(createUserDto: CreateUserDto): Promise<User> {
@@ -61,8 +56,8 @@ export class AuthService {
       throw new UnauthorizedException("Credenciales incorrectas");
     }
 //tengo que añadir que el email qeu el usuario guarda por registro el email añada a la base de datos
-    const payload: JwtPayload = {username: user.username,password: ''}; // Define los datos que deseas incluir en el token
-    const token = jwt.sign(payload, this.JWT_SECRET, { expiresIn: "100h" }); // Genera el token con una duración de 300 horas
+    const payload: JwtPayload = {username: user.username,password: ''}; // Definir los datos que deseamos incluir en el token
+    const token = jwt.sign(payload, this.JWT_SECRET, { expiresIn: "100h" }); // Generar el token con una duración de 100 horas
 
     return token;
   }

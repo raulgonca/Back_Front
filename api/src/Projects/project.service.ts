@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Project } from './project.entity';
+import { UpdateProjectDto } from 'src/DTOs/UpdateProject.dto';
 
 @Injectable()
 export class ProjectService {
@@ -16,13 +17,14 @@ export class ProjectService {
 
     }
     
-      async getUserProjects(userId: number): Promise<Project[]> {
+    async getUserProjects(userId: number): Promise<Project[]> {
       return this.projectRepository
         .createQueryBuilder('project')
         .leftJoinAndSelect('project.collaborators', 'collaborators')
         .where('project.ownerId = :userId OR collaborators.id = :userId', { userId })
         .getMany();
     }
+    
   
     async getAllProject(): Promise<Project[]> {
       return this.projectRepository.find();
@@ -37,13 +39,19 @@ export class ProjectService {
     }
   
   
-    //  async updateProject(id: number, nameproject: string, description: string, fechaInicio: Date, fechaFinalizacion: Date, colaborador : []): Promise<Project> {
-    //    const project = await this.projectRepository.findOne({ where: { id } });
-    //     if (!project) {
-    //      throw new Error(`Proyecto con id ${id} no encontrado`);
-    //    }
-    //   }
-  
+    async updateProject(id: number, updateProjectDto: UpdateProjectDto): Promise<Project> {
+      const existingProject = await this.findOne(id);
+      if (existingProject) {
+        // If the start date is already set, keep it
+        if (existingProject.fechaInicio) {
+          updateProjectDto.fechaInicio = existingProject.fechaInicio;
+        }
+        // Call the service to update the project
+        return this.updateProject  (id, updateProjectDto);
+      } else {
+        throw new Error('Project not found');
+      }
+    }
   
 }
   
