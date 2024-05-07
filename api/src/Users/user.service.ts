@@ -51,11 +51,11 @@ export class UserService {
         await this.userRepository.delete(id);
     }
 
-    //async validateUser(username: string, password: string): Promise<any> {
-    //const user = await this.findByUsername(username);
-    //  if (user && user.password === password) {
-    //      return user;
-    //}
-    //      return null;
-    //}
+    async findUsersByUsername(username: string): Promise<User[]> {
+      const users = await this.userRepository.find({
+        where: { username: username },
+      });
+      return users;
+    }
+
 }

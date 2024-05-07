@@ -17,12 +17,8 @@ export class ProjectService {
 
     }
     
-    async getUserProjects(userId: number): Promise<Project[]> {
-      return this.projectRepository
-        .createQueryBuilder('project')
-        .leftJoinAndSelect('project.collaborators', 'collaborators')
-        .where('project.ownerId = :userId OR collaborators.id = :userId', { userId })
-        .getMany();
+    async getUserProjects(username: string): Promise<Project[]> {
+      return this.projectRepository.find({where:{owner:username}})
     }
     
   

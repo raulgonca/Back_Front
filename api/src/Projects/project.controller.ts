@@ -12,10 +12,9 @@ export class ProjectController {
     return this.projectService.createProject(createProjectDto);
   }
 
-  @Get('user-projects')
-  async getUserProjects(@Request() req) {
-  const userId = req.user.id; // Obtener el ID del usuario autenticado desde el token
-  return this.projectService.getUserProjects(userId);
+  @Get('user-projects/:username')
+  async getUserProjects(@Param("username") username:string) {
+    return this.projectService.getUserProjects(username);
 }
 
 

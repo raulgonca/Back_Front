@@ -2,7 +2,7 @@
 import { ApiTags, ApiBody, ApiResponse } from '@nestjs/swagger';
 import { CreateUserDto } from 'src/DTOs/create-user.dto';
 import { User } from './user.entity';
-import { Body, ConflictException, Controller, Get, Post } from '@nestjs/common';
+import { BadRequestException, Body, ConflictException, Controller, Get, Post, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 
 @Controller('users')
@@ -37,5 +37,15 @@ export class UserController {
   async findByUsername(@Body() body: { username: string }): Promise<User | undefined> {
     const { username } = body;
     return this.userService.findByUsername(username);
+  }
+
+  @Get('search')
+  async searchUsersByUsername(@Query('username') username: string): Promise<User[]> {
+    if (!username) {
+      throw new BadRequestException('El parámetro "username" es obligatorio');
+    }
+
+    const users = await this.userService.findUsersByUsername(username);
+    return users;
   }
 }

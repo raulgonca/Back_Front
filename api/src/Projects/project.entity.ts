@@ -1,5 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, ManyToMany, JoinTable } from 'typeorm';
-import { User } from '../Users/user.entity';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
 export class Project {
@@ -18,11 +17,9 @@ export class Project {
   @Column('jsonb', { nullable : true })
   fechaFinalizacion: Date;
 
-  @ManyToOne(() => User, user => user.ownedProjects)
-  owner : User;
+  @Column({ nullable : true })
+  owner : string;
 
-
-  @ManyToMany(() => User, user => user.projects)
-  @JoinTable()
-  collaborators : User[];
+  @Column('jsonb', { nullable : true })
+  collaborators : string[];
 }

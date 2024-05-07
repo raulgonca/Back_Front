@@ -1,11 +1,12 @@
+import config from './config';
+import * as dotenv from "dotenv";
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './Users/user.module'; 
-import { ProjectModule } from './Projects/project.module';
-import { ProjectUserModule } from './projects_users/project-user.module';
 import { AuthModule } from './auth/auth.module';
-import config from './config';
-import * as dotenv from "dotenv";
+import { ProjectModule } from './Projects/project.module';
+import { ClienteModule } from './Clients/client.module';
+// import { ProjectUserModule } from './projects_users/project-user.module';
 
 dotenv.config();
 
@@ -24,8 +25,9 @@ dotenv.config();
     }),
     UserModule,
     ProjectModule,
-    ProjectUserModule,
-    AuthModule
+    AuthModule,
+    ClienteModule
+    // ProjectUserModule,
     
   ],
   providers: [],
