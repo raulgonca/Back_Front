@@ -18,7 +18,7 @@ export class AuthController {
     try {
       const newUser =await this.authService.createUser(createUserDto)
       return {
-        message : "El regisro fue exitoso, Usuario Creado",
+        message : "El registro fue exitoso, Usuario Creado",
         success : true,
         user : newUser,
       };

@@ -2,7 +2,7 @@
 import { ApiTags, ApiBody, ApiResponse } from '@nestjs/swagger';
 import { CreateUserDto } from 'src/DTOs/create-user.dto';
 import { User } from './user.entity';
-import { BadRequestException, Body, ConflictException, Controller, Get, Post, Query } from '@nestjs/common';
+import { BadRequestException, Body, ConflictException, Controller, Delete, Get, Param, Post, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 
 @Controller('users')
@@ -47,5 +47,10 @@ export class UserController {
 
     const users = await this.userService.findUsersByUsername(username);
     return users;
+  }
+
+  @Delete(':id')
+  async deleteUser(@Param('id') id: number): Promise<void> {
+    await this.userService.deleteUser(id);
   }
 }
