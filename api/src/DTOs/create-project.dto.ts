@@ -2,19 +2,19 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateProjectDto {
     @ApiProperty({ description: 'Nombre del proyecto' })
-    nameproject: string;
+    nameproject : string;
 
     @ApiProperty({ description: 'Breve descripción del proyecto' })
-    description: string;
+    description : string;
 
     @ApiProperty({ description: 'Fecha de Inicio' })
-    fechaInicio: Date;
+    fechaInicio : Date;
 
     @ApiProperty({ description: 'Fecha de Finalización' })
-    fechaFinalizacion: Date;
+    fechaFinalizacion : Date;
 
     @ApiProperty({ description: 'Colaboradores agregados' })
-    colaborador : string;
+    colaborador : string[] ;
 
 
 

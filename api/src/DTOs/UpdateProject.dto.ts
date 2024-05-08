@@ -16,4 +16,9 @@ export class UpdateProjectDto {
   @IsOptional()
   @IsDate()
   fechaFinalizacion: Date;
+
+  @IsOptional()
+  @IsDate()
+  collaborators : string[];
+
 }

@@ -6,7 +6,6 @@ import { UserModule } from './Users/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ProjectModule } from './Projects/project.module';
 import { ClienteModule } from './Clients/client.module';
-// import { ProjectUserModule } from './projects_users/project-user.module';
 
 dotenv.config();
 
@@ -27,7 +26,6 @@ dotenv.config();
     ProjectModule,
     AuthModule,
     ClienteModule
-    // ProjectUserModule,
     
   ],
   providers: [],

@@ -1,7 +1,7 @@
+import { Project } from './project.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Project } from './project.entity';
+import { Like, Repository } from 'typeorm';
 import { UpdateProjectDto } from 'src/DTOs/UpdateProject.dto';
 
 @Injectable()
@@ -18,7 +18,7 @@ export class ProjectService {
     }
     
     async getUserProjects(username: string): Promise<Project[]> {
-      return this.projectRepository.find({where:{owner:username}})
+      return this.projectRepository.find( { where: { owner:username } } )
     }
     
   
@@ -38,15 +38,21 @@ export class ProjectService {
     async updateProject(id: number, updateProjectDto: UpdateProjectDto): Promise<Project> {
       const existingProject = await this.findOne(id);
       if (existingProject) {
-        // If the start date is already set, keep it
         if (existingProject.fechaInicio) {
           updateProjectDto.fechaInicio = existingProject.fechaInicio;
         }
-        // Call the service to update the project
         return this.updateProject  (id, updateProjectDto);
       } else {
         throw new Error('Project not found');
       }
+    }
+
+    async getProjectForCollaborator(username: string): Promise<Project[]> {
+      return this.projectRepository.find({
+        where: [
+          { collaborators: Like(`%${username}%`) }
+        ]
+      });
     }
   
 }
