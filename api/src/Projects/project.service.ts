@@ -1,7 +1,7 @@
 import { Project } from './project.entity';
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Like, Repository } from 'typeorm';
+import { FindOneOptions, Like, Repository } from 'typeorm';
 import { UpdateProjectDto } from 'src/DTOs/UpdateProject.dto';
 
 @Injectable()
@@ -54,7 +54,46 @@ export class ProjectService {
         ]
       });
     }
+
+    // metodos para los clientes
+    async getProjectForClientes(username: string): Promise<Project[]> {
+      return this.projectRepository.find({
+        where: [
+          { cliente: Like(`%${username}%`) }
+        ]
+      });
+    }
+
+    // Clockifi timer
+    // Actualizar Timer
+    async ActualizarTiempo(id: number, updateProjectDto: { time: number }): Promise<Project> {
+      const { time } = updateProjectDto;
+    
+      try {
+        const project = await this.projectRepository.findOne({where : {id}});
+        if (!project) {
+          throw new NotFoundException(`Proyecto con id ${id} no encontrado`);
+        }
+        project.time = time;
+        return this.projectRepository.save(project);
+      } catch (error) {
+        throw new InternalServerErrorException(`Error al actualizar tiempo del proyecto con id ${id}`);
+      }
+    }
+    
+
+    // Obtener Timer
+    async ObtenerTiempo(id: number): Promise<number> {
+      try {
+        const project = await this.projectRepository.findOne({where : {id}});
+        if (!project) {
+          throw new NotFoundException(`Proyecto con id ${id} no encontrado`);
+        }
+        return project.time;
+      } catch (error) {
+        throw new InternalServerErrorException(`Error al obtener tiempo del proyecto con id ${id}`);
+      }
+    }
+    
   
 }
-  
-  

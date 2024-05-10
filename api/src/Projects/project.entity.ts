@@ -22,4 +22,10 @@ export class Project {
 
   @Column('jsonb', { nullable : true })
   collaborators : string[];
+
+  @Column('jsonb', { nullable : true })
+  cliente : string[];
+
+  @Column('jsonb', { nullable: true })
+  time: number;
 }

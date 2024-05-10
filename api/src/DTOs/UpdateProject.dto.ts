@@ -1,4 +1,4 @@
-import { IsString, IsOptional, IsDate } from 'class-validator';
+import { IsString, IsOptional, IsDate, IsNumber } from 'class-validator';
 
 export class UpdateProjectDto {
   @IsOptional()
@@ -19,6 +19,14 @@ export class UpdateProjectDto {
 
   @IsOptional()
   @IsDate()
-  collaborators : string[];
+  collaborators?: string[];
+
+  @IsString()
+  @IsOptional()
+  cliente?: string[];
+
+  @IsNumber()
+  @IsOptional()
+  time: number
 
 }
