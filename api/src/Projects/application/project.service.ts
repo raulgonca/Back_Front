@@ -1,8 +1,8 @@
-import { Project } from '../domain/project.entity';
 import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { UpdateProjectDto } from '../infrastructure/dto/UpdateProject.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FindOneOptions, Like, Repository } from 'typeorm';
-import { UpdateProjectDto } from 'src/DTOs/UpdateProject.dto';
+import { Like, Repository } from 'typeorm';
+import { Project } from '../domain/project.entity';
 
 @Injectable()
 export class ProjectService {

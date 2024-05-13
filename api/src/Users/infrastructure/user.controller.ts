@@ -1,6 +1,6 @@
 
 import { ApiTags, ApiBody, ApiResponse } from '@nestjs/swagger';
-import { CreateUserDto } from 'src/DTOs/create-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 import { User } from '../domain/user.entity';
 import { BadRequestException, Body, ConflictException, Controller, Delete, Get, Param, Post, Query } from '@nestjs/common';
 import { UserService } from '../application/user.service';

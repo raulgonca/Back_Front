@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Param, Delete, Put, Patch } from '@nestjs/common';
-import { CreateProjectDto } from 'src/DTOs/create-project.dto';
-import { UpdateProjectDto } from 'src/DTOs/UpdateProject.dto';
+import { CreateProjectDto } from './dto/create-project.dto';
+import { UpdateProjectDto } from './dto/UpdateProject.dto';
 import { ProjectService } from '../application/project.service';
 import { Project } from '../domain/project.entity';
 

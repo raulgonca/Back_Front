@@ -1,12 +1,12 @@
-import { InjectRepository } from '@nestjs/typeorm';
-import { User } from '../Users/domain/user.entity'; 
 import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { CreateUserDto } from '../Users/infrastructure/dto/create-user.dto';
+import { JwtPayload } from './jwt-payload.interface';
+import { Repository } from 'typeorm';
+import { LoginDto } from 'src/DTOs/login.dto';
+import { User } from '../Users/domain/user.entity'; 
 import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
-import { CreateUserDto } from 'src/DTOs/create-user.dto';
-import { JwtPayload } from './jwt-payload.interface';
-import { LoginDto } from 'src/DTOs/login.dto';
-import { Repository } from 'typeorm';
 
 @Injectable()
 export class AuthService {
