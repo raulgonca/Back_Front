@@ -65,6 +65,7 @@ export class ProjectService {
     }
 
     // Clockifi timer
+    //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // Actualizar Timer
     async ActualizarTiempo(id: number, updateProjectDto: { time: number }): Promise<Project> {
       const { time } = updateProjectDto;
