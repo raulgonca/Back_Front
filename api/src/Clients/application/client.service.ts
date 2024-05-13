@@ -3,7 +3,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Like } from 'typeorm';
-import { Client } from './client.entity';
+import { Client } from '../domain/client.entity';
 
 @Injectable()
 export class ClientService {

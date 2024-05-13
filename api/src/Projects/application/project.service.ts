@@ -1,4 +1,4 @@
-import { Project } from './project.entity';
+import { Project } from '../domain/project.entity';
 import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindOneOptions, Like, Repository } from 'typeorm';

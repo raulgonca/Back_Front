@@ -1,5 +1,5 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from '../Users/user.entity'; 
+import { User } from '../Users/domain/user.entity'; 
 import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";

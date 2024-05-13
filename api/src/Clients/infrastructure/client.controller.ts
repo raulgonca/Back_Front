@@ -1,8 +1,8 @@
 // clientes.controller.ts
 
 import { Controller, Get, Post, Put, Delete, Param, Body, Query } from '@nestjs/common';
-import { ClientService } from './client.service';
-import { Client } from './client.entity';
+import { ClientService } from '../application/client.service';
+import { Client } from '../domain/client.entity';
 
 @Controller('clientes')
 export class ClientController {

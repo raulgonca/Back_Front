@@ -1,10 +1,10 @@
+import { ApiBody, ApiOperation, ApiParam, ApiResponse } from "@nestjs/swagger";
 import { ConflictException, Injectable } from "@nestjs/common";
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from './user.entity';
-import { CreateUserDto } from '../DTOs/create-user.dto';
-import * as bcrypt from "bcryptjs";
-import { ApiBody, ApiOperation, ApiParam, ApiResponse } from "@nestjs/swagger";
+import { CreateUserDto } from '../infrastructure/dto/create-user.dto';
 import { Repository } from "typeorm";
+import { User } from '../domain/user.entity';
+import * as bcrypt from "bcryptjs";
 
 @Injectable()
 export class UserService {

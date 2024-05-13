@@ -1,8 +1,8 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { ProjectController } from "./project.controller";
-import { ProjectService } from "./project.service";
-import { Project } from "./project.entity";
+import { ProjectController } from "./infrastructure/project.controller";
+import { ProjectService } from "./application/project.service";
+import { Project } from "./domain/project.entity";
 
 @Module({
   imports: [TypeOrmModule.forFeature([Project])],
