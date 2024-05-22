@@ -1,14 +1,15 @@
-import { Module } from "@nestjs/common";
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { AuthController } from "./auth.controller";
-import { AuthService } from "./auth.service";
-import { User } from "../Users/domain/user.entity";
-import { UserService } from "../Users/application/user.service";
+// src/auth/auth.module.ts
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthController } from './auth.controller';
+import { AuthService } from './auth.service';
+import { User } from '../Users/domain/user.entity';
+import { DirectusModule } from '../Directus/directus.module';
+import { DirectusService } from '../Directus/application/directus.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User])],
+  imports: [TypeOrmModule.forFeature([User]), DirectusModule],
   controllers: [AuthController],
-  providers: [AuthService, UserService],
+  providers: [AuthService, DirectusService],
 })
-
 export class AuthModule {}

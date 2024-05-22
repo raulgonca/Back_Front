@@ -1,12 +1,13 @@
+// src/auth/auth.service.ts
 import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateUserDto } from '../Users/infrastructure/dto/create-user.dto';
-import { JwtPayload } from './jwt-payload.interface';
 import { Repository } from 'typeorm';
 import { LoginDto } from 'src/DTOs/login.dto';
-import { User } from '../Users/domain/user.entity'; 
-import * as bcrypt from "bcryptjs";
-import * as jwt from "jsonwebtoken";
+import * as bcrypt from 'bcryptjs';
+import * as jwt from 'jsonwebtoken';
+import { DirectusService } from '../Directus/application/directus.service';
+import { User } from '../Users/domain/user.entity';
+import { CreateUserDto } from 'src/Users/infrastructure/dto/create-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -15,9 +16,10 @@ export class AuthService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    private readonly directusService: DirectusService,
   ) {}
 
-//Crear Usuarios
+  //Crear Usuarios
   async createUser(createUserDto: CreateUserDto): Promise<User> {
     const { username, password, gmail } = createUserDto;
 
@@ -41,28 +43,29 @@ export class AuthService {
     }
   }
 
-//Login del Usuario
-  async login(loginDto: LoginDto): Promise<string | null> {
+  async login(loginDto: LoginDto): Promise<{ token: string }> {
     const { username, password } = loginDto;
-    const user = await this.userRepository.findOne({ where: { username: username } });
+    const directusResponse = await this.directusService.getUserByUsername(username);
+    const user = directusResponse.data[0];
 
     if (!user) {
-      throw new UnauthorizedException("Credenciales incorrectas");
+      throw new UnauthorizedException('Credenciales incorrectas');
     }
 
     const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (!passwordMatch) {
-      throw new UnauthorizedException("Credenciales incorrectas");
+      throw new UnauthorizedException('Credenciales incorrectas');
     }
-//tengo que añadir que el email qeu el usuario guarda por registro el email añada a la base de datos
-    const payload: JwtPayload = {username: user.username,password: ''}; // Definir los datos que deseamos incluir en el token
-    const token = jwt.sign(payload, this.JWT_SECRET, { expiresIn: "100h" }); // Generar el token con una duración de 100 horas
 
-    return token;
+    const payload = { username: user.username };
+    const token = jwt.sign(payload, this.JWT_SECRET, { expiresIn: '100h' });
+
+    return { token };
   }
 
-//Verificar Tokens
+    
+  //Verificar Tokens
   async verificarToken(token: string): Promise<any> {
     try {
       const decoded = jwt.verify(token, this.JWT_SECRET);
@@ -71,13 +74,13 @@ export class AuthService {
       throw new UnauthorizedException("Token inválido");
     }
   }
-
-//Buscar usuario por nombre
+  
+  //Buscar usuario por nombre
   async findByUsername(username: string): Promise<User | undefined > {
     return this.userRepository.findOne({ where: { username } });
   }
-
-//Validar user
+  
+  //Validar user
   async validateUser(username: string, password: string): Promise<any> {
     const user = await this.findByUsername(username);
       if (user && user.password === password) {
@@ -85,4 +88,5 @@ export class AuthService {
     }
           return null;
   }
+
 }

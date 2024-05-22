@@ -4,7 +4,7 @@ import { AuthService } from './auth.service';
 import { LoginDto } from 'src/DTOs/login.dto';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from '../Users/infrastructure/dto/create-user.dto';
-import { User } from '../Users/domain/user.entity';
+//import { User } from '../Users/domain/user.entity';
 
 
 @Controller('auth')
@@ -15,24 +15,24 @@ export class AuthController {
   //login con credenciales de usuario
   @Post("/register")
   async createUser(@Body() createUserDto : CreateUserDto){
-    try {
-      const newUser =await this.authService.createUser(createUserDto)
-      return {
-        message : "El registro fue exitoso, Usuario Creado",
-        success : true,
-        user : newUser,
-      };
-    } catch (error) {
-      // Manejar el error ocurrido durante la creación del usuario
-      console.error('Error al crear usuario:', error);
-      
-      // Devolvemos una respuesta indicando el error
-      return {
-        message: 'Hubo un error al crear el usuario. Por favor, inténtalo de nuevo.',
-        success: false,
-        error: error.message, // Podemos proporcionar más detalles del error si es necesario
-      };
-    }
+   try {
+     const newUser =await this.authService.createUser(createUserDto)
+     return {
+       message : "El registro fue exitoso, Usuario Creado",
+       success : true,
+       user : newUser,
+     };
+   } catch (error) {
+     // Manejar el error ocurrido durante la creación del usuario
+     console.error('Error al crear usuario:', error);
+     
+     // Devolvemos una respuesta indicando el error
+     return {
+       message: 'Hubo un error al crear el usuario. Por favor, inténtalo de nuevo.',
+       success: false,
+       error: error.message, // Podemos proporcionar más detalles del error si es necesario
+     };
+   }
   }
 
     //login con credenciales de usuario
