@@ -2,7 +2,6 @@ import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { UserController } from "./infrastructure/user.controller";
 import { UserService } from "./application/user.service";
-//import { UserRepository } from "./user.repository"; // Importa UserRepository
 import { User } from "./domain/user.entity";
 
 @Module({
